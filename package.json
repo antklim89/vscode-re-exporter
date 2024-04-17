@@ -14,8 +14,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "vscode-re-exporter.helloWorld",
-        "title": "Hello World"
+        "command": "vscode-re-exporter.createConfigFile",
+        "title": "Create Config File"
       }
     ]
   },
