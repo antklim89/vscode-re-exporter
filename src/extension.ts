@@ -2,18 +2,21 @@ import * as vscode from 'vscode';
 import { generateReexports, createConfigFile } from 're-exporter';
 
 
-const handleCreateConfigFile = async () => {
+async function selectWorkSpace(): Promise<string | undefined> {
 	if (vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 1) {
 		const selected = await vscode.window.showQuickPick(
-			vscode.workspace.workspaceFolders?.map((i) => i.name),
+			vscode.workspace.workspaceFolders?.map((i) => i.name)
 		);
-		const cwd = vscode.workspace.workspaceFolders.find(i => i.name === selected)?.uri.path;
-		if (cwd) {
-			await createConfigFile(cwd);
-		}
+		return vscode.workspace.workspaceFolders.find(i => i.name === selected)?.uri.path;
 	} else if (vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length === 1) {
-		const cwd = vscode.workspace.workspaceFolders[0].uri.path;
-		await createConfigFile(cwd);
+		return vscode.workspace.workspaceFolders[0].uri.path;
+	}
+}
+
+const handleCreateConfigFile = async () => {
+	const cwd = await selectWorkSpace();
+	if (cwd) {
+		await createConfigFile({ cwd });
 	}
 };
 
