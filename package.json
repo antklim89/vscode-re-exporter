@@ -15,7 +15,7 @@
     "commands": [
       {
         "command": "vscode-re-exporter.createConfigFile",
-        "title": "Create Config File"
+        "title": "Re-Exporter: Create Config File"
       }
     ]
   },
